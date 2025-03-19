@@ -15,12 +15,21 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
+                # Install dependencies
                 composer install --no-dev --optimize-autoloader
+                
+                # Pastikan package mikey179/vfsstream terinstal
+                if ! composer show | grep -q "mikey179/vfsstream"; then
+                    echo "Package mikey179/vfsstream tidak ditemukan, menginstal..."
+                    composer require --dev mikey179/vfsstream
+                fi
 
-                # Gunakan perintah sed yang baru dengan backup (.bak)
+                # File yang akan diubah
                 FILE="vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php"
+
+                # Periksa apakah file ada sebelum menjalankan sed
                 if [ -f "$FILE" ]; then
-                    sed -i .bak s/name{0}/name[0]/ "$FILE"
+                    sed -i.bak s/name{0}/name[0]/ "$FILE"
                 else
                     echo "File $FILE tidak ditemukan, melewati perintah sed."
                 fi
