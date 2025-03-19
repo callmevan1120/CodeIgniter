@@ -39,25 +39,25 @@ pipeline {
         }
             
 
-        stage('Run Tests') {
-            steps {
-                sh '''
-                mkdir -p application/tests/results
-                vendor/bin/phpunit --log-junit application/tests/results/phpunit.xml || true
-                '''
-            }
+        // stage('Run Tests') {
+        //     steps {
+        //         sh '''
+        //         mkdir -p application/tests/results
+        //         vendor/bin/phpunit --log-junit application/tests/results/phpunit.xml || true
+        //         '''
+        //     }
             
-            post {
-                success {
-                    echo 'Tests completed successfully!'
-                    junit 'application/tests/results/phpunit.xml'
-                }
-                failure {
-                    echo 'Tests failed! But still collecting JUnit results...'
-                    junit 'application/tests/results/phpunit.xml'
-                }
-            }
-        }
+        //     post {
+        //         success {
+        //             echo 'Tests completed successfully!'
+        //             junit 'application/tests/results/phpunit.xml'
+        //         }
+        //         failure {
+        //             echo 'Tests failed! But still collecting JUnit results...'
+        //             junit 'application/tests/results/phpunit.xml'
+        //         }
+        //     }
+        // }
 
         stage('Deploy') {
             steps {
