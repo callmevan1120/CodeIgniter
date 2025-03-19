@@ -22,14 +22,14 @@ pipeline {
         vendor/bin/phpunit --log-junit application/tests/results/phpunit.xml
         '''
     }
- post {
- success {
- junit 'application/tests/results/*.xml'
- }
- failure {
- echo 'Tests failed!'
- }
- }
+//  post {
+//  success {
+//  junit 'application/tests/results/*.xml'
+//  }
+//  failure {
+//  echo 'Tests failed!'
+//  }
+//  }
  }
  stage('Deploy') {
  steps {
