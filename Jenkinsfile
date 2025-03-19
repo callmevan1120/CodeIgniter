@@ -27,7 +27,7 @@ pipeline {
                 fi
 
                 # File yang akan diubah
-                FILE="mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php"
+                FILE="mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsstream.php"
 
                 # Periksa apakah file ada sebelum menjalankan sed
                 if [ -f "$FILE" ]; then
