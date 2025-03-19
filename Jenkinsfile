@@ -1,23 +1,30 @@
 pipeline {
     agent any
-    
+
     environment {
         CI_ENV = 'production'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/callmevan1120/CodeIgniter.git'
+                git branch: 'main', url: 'https://github.com/username/CodeIgniter.git'
             }
         }
-        
+
         stage('Install Dependencies') {
             steps {
-                sh 'composer install --no-dev --optimize-autoloader'
+                sh '''
+                composer install --no-dev --optimize-autoloader
+                
+                # Cek apakah file vfsStream.php ada sebelum menjalankan sed
+                if [ -f vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php ]; then
+                    sed -i s/name{0}/name[0]/ vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php
+                fi
+                '''
             }
         }
-        
+
         stage('Run Tests') {
             steps {
                 sh 'phpunit'
@@ -31,7 +38,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy') {
             steps {
                 echo 'Deploying to production environment...'
@@ -39,7 +46,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Pipeline completed successfully!'
