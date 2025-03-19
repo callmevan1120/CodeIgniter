@@ -11,22 +11,10 @@ pipeline {
  }
  }
  stage('Install Dependencies') {
-    steps {
-        sh '''
-        # Install dependencies dengan Composer
-        composer install --no-dev --optimize-autoloader
-
-        # Periksa apakah file vfsStream.php ada sebelum menjalankan sed
-        VFS_FILE="vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php"
-        if [ -f "$VFS_FILE" ]; then
-            sed -i 's/name{0}/name[0]/' "$VFS_FILE"
-            echo "Patch berhasil diterapkan pada $VFS_FILE"
-        else
-            echo "File $VFS_FILE tidak ditemukan, melewati patch..."
-        fi
-        '''
-    }
-}
+ steps {
+ sh 'composer install'
+ }
+ }
  stage('Run Tests') {
  steps {
  sh 'phpunit'
