@@ -17,6 +17,8 @@ pipeline {
                 sh '''
                 # Install dependencies
                 composer install --no-dev --optimize-autoloader
+
+                composer update
                 
                 # Pastikan package mikey179/vfsstream terinstal
                 if ! composer show | grep -q "mikey179/vfsstream"; then
