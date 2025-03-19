@@ -18,8 +18,11 @@ pipeline {
                 composer install --no-dev --optimize-autoloader
                 
                 # Cek apakah file vfsStream.php ada sebelum menjalankan sed
-                if [ -f vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php ]; then
-                    sed -i s/name{0}/name[0]/ vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php
+                FILE="vendor/mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStream.php"
+                if [ -f "$FILE" ]; then
+                    sed -i s/name{0}/name[0]/ "$FILE"
+                else
+                    echo "File $FILE tidak ditemukan, melewati perintah sed."
                 fi
                 '''
             }
