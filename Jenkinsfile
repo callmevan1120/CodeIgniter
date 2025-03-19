@@ -13,6 +13,11 @@ pipeline {
  stage('Install PHP & Composer') {
             steps {
                 sh '''
+                 # Ganti user menjadi root jika perlu
+                if [ "$(id -u)" -ne 0 ]; then
+                    echo "Switching to root..."
+                    exec sudo -E bash "$0" "$@"
+                fi
                 # Perbarui package list
                 apt update
                 
