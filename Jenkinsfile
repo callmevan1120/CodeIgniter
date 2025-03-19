@@ -17,8 +17,11 @@ pipeline {
  }
  stage('Run Tests') {
  steps {
- sh 'phpunit'
- }
+        sh '''
+        mkdir -p application/tests/results
+        vendor/bin/phpunit --log-junit application/tests/results/phpunit.xml
+        '''
+    }
  post {
  success {
  junit 'application/tests/results/*.xml'
