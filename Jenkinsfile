@@ -20,14 +20,14 @@ pipeline {
 
                 composer update
                 
-                # Pastikan package mikey179/vfsstream terinstal
-                if ! composer show | grep -q "mikey179/vfsstream"; then
-                    echo "Package mikey179/vfsstream tidak ditemukan, menginstal..."
-                    composer require --dev mikey179/vfsstream
+                # Pastikan package mikey179/vfsStream terinstal
+                if ! composer show | grep -q "mikey179/vfsStream"; then
+                    echo "Package mikey179/vfsStream tidak ditemukan, menginstal..."
+                    composer require --dev mikey179/vfsStream
                 fi
 
                 # File yang akan diubah
-                FILE="mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsstream.php"
+                FILE="mikey179/vfsStream/src/main/php/org/bovigo/vfs/vfsStream.php"
 
                 # Periksa apakah file ada sebelum menjalankan sed
                 if [ -f "$FILE" ]; then
